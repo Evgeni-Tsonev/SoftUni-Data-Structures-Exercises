@@ -64,7 +64,24 @@
 
         public IEnumerable<T> GetInternalKeys()
         {
-            throw new NotImplementedException();
+            var internalNodes = new List<T>();
+
+            this.DfsInternalKeys(internalNodes, this);
+
+            return internalNodes;
+        }
+
+        private void DfsInternalKeys(List<T> internalNodes, Tree<T> tree)
+        {
+            foreach (var child in tree.children)
+            {
+                if (child.children.Count > 0 && child.Parent != null)
+                {
+                    internalNodes.Add(child.Key);
+                }
+
+                this.DfsInternalKeys(internalNodes, child);
+            }
         }
 
         public IEnumerable<T> GetLeafKeys()
@@ -89,7 +106,7 @@
             }
         }
 
-            public T GetDeepestKey()
+        public T GetDeepestKey()
         {
             throw new NotImplementedException();
         }
