@@ -12,7 +12,9 @@
             var tree = treeFactory.CreateTreeFromStrings(input);
 
             var root = treeFactory.GetRoot();
-            Console.WriteLine(root.Key);
+            var treeString = tree.AsString();
+            //Console.WriteLine(root.Key);
+            Console.WriteLine(treeString);
         }
     }
 }
