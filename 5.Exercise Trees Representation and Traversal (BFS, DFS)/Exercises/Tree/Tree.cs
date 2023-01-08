@@ -69,10 +69,27 @@
 
         public IEnumerable<T> GetLeafKeys()
         {
-            throw new NotImplementedException();
+            var leafs = new List<T>();
+
+            this.DfsLeafKeys(leafs, this);
+
+            return leafs;
         }
 
-        public T GetDeepestKey()
+        private void DfsLeafKeys(List<T> leafs, Tree<T> tree)
+        {
+            foreach (var child in tree.children)
+            {
+                if (child.children.Count == 0)
+                {
+                    leafs.Add(child.Key);
+                }
+
+                this.DfsLeafKeys(leafs, child);
+            }
+        }
+
+            public T GetDeepestKey()
         {
             throw new NotImplementedException();
         }
