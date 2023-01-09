@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
 
     public class Tree<T> : IAbstractTree<T>
@@ -86,29 +87,63 @@
 
         public IEnumerable<T> GetLeafKeys()
         {
-            var leafs = new List<T>();
+            var list = new List<Tree<T>>();
 
-            this.DfsLeafKeys(leafs, this);
+            var leafs = this.DfsLeafKeys(list, this);
 
-            return leafs;
+            return leafs.Select(x => x.Key);
         }
 
-        private void DfsLeafKeys(List<T> leafs, Tree<T> tree)
+        private IEnumerable<Tree<T>> DfsLeafKeys(List<Tree<T>> leafs, Tree<T> tree)
         {
             foreach (var child in tree.children)
             {
                 if (child.children.Count == 0)
                 {
-                    leafs.Add(child.Key);
+                    leafs.Add(child);
                 }
 
                 this.DfsLeafKeys(leafs, child);
             }
+
+            return leafs;
         }
 
         public T GetDeepestKey()
         {
-            throw new NotImplementedException();
+            Tree<T> deepestNode = null;
+            var list = new List<Tree<T>>();
+
+            var leafs = this.DfsLeafKeys(list, this);
+
+            var maxDepth = 0;
+
+            foreach (var leaf in leafs)
+            {
+                var currentLeafDepth = this.GetDepth(leaf);
+
+                if (currentLeafDepth > maxDepth)
+                {
+                    deepestNode = leaf;
+                    maxDepth = currentLeafDepth;
+                }
+            }
+
+            return deepestNode.Key;
+        }
+
+        private int GetDepth(Tree<T> leaf)
+        {
+            int depth = 0;
+            var tree = leaf;
+
+            while (tree.Parent != null)
+            {
+                depth++;
+                tree = tree.Parent;
+            }
+
+            return depth;
         }
 
         public IEnumerable<T> GetLongestPath()

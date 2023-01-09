@@ -14,7 +14,10 @@
             var root = treeFactory.GetRoot();
             var treeString = tree.AsString();
             //Console.WriteLine(root.Key);
-            Console.WriteLine(treeString);
+            //Console.WriteLine(treeString);
+
+            var deepestKey = tree.GetDeepestKey();
+            Console.WriteLine(deepestKey);
         }
     }
 }
