@@ -1,6 +1,7 @@
 ﻿namespace Demo
 {
     using System;
+    using System.Text;
     using _01.BinaryTree;
 
     class Program
@@ -19,13 +20,12 @@
                               new BinaryTree<int>(20, null, null),
                               new BinaryTree<int>(31, null, null)));
 
-            var result = tree.InOrder();
+            StringBuilder builder = new StringBuilder();
 
-            foreach (var item in result)
-            {
-                Console.WriteLine(item.Value);
+            tree.ForEachInOrder(key => builder.Append(key).Append(", "));
+            string actual = builder.ToString();
 
-            }
+            Console.WriteLine(actual);
         }
     }
 }

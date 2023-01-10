@@ -3,6 +3,7 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
 
     public class BinaryTree<T> : IAbstractBinaryTree<T>
@@ -29,27 +30,16 @@
             return result;
         }
 
-        private string Dfs(IAbstractBinaryTree<T> tree, StringBuilder sb, int indent)
-        {
-            sb.Append(new string(' ', indent));
-            sb.AppendLine(tree.Value.ToString());
-
-            if (tree.LeftChild != null)
-            {
-                this.Dfs(tree.LeftChild, sb, indent + 2);
-            }
-
-            if (tree.RightChild != null)
-            {
-                this.Dfs(tree.RightChild, sb, indent + 2);
-            }
-
-            return sb.ToString().TrimEnd();
-        }
-
         public void ForEachInOrder(Action<T> action)
         {
-            throw new NotImplementedException();
+            var list = new List<IAbstractBinaryTree<T>>();
+
+            var elements = this.DfsInOrder(this, list);
+
+            foreach (var node in elements)
+            {
+                action.Invoke(node.Value);
+            }
         }
 
         public IEnumerable<IAbstractBinaryTree<T>> InOrder()
@@ -77,6 +67,24 @@
             var result = this.DfsPreOrder(this, list);
 
             return result;
+        }
+
+        private string Dfs(IAbstractBinaryTree<T> tree, StringBuilder sb, int indent)
+        {
+            sb.Append(new string(' ', indent));
+            sb.AppendLine(tree.Value.ToString());
+
+            if (tree.LeftChild != null)
+            {
+                this.Dfs(tree.LeftChild, sb, indent + 2);
+            }
+
+            if (tree.RightChild != null)
+            {
+                this.Dfs(tree.RightChild, sb, indent + 2);
+            }
+
+            return sb.ToString().TrimEnd();
         }
 
         private IEnumerable<IAbstractBinaryTree<T>> DfsPreOrder(IAbstractBinaryTree<T> tree, List<IAbstractBinaryTree<T>> listForResults)
