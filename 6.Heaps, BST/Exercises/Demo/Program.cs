@@ -19,9 +19,13 @@
                               new BinaryTree<int>(20, null, null),
                               new BinaryTree<int>(31, null, null)));
 
-            var result = tree.AsIndentedPreOrder(0);
+            var result = tree.InOrder();
 
-            Console.WriteLine(result);
+            foreach (var item in result)
+            {
+                Console.WriteLine(item.Value);
+
+            }
         }
     }
 }

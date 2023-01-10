@@ -1,6 +1,7 @@
 ﻿namespace _01.BinaryTree
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Text;
 
@@ -53,17 +54,81 @@
 
         public IEnumerable<IAbstractBinaryTree<T>> InOrder()
         {
-            throw new NotImplementedException();
+            var list = new List<IAbstractBinaryTree<T>>();
+
+            var result = this.DfsInOrder(this, list);
+
+            return result;
         }
 
         public IEnumerable<IAbstractBinaryTree<T>> PostOrder()
         {
-            throw new NotImplementedException();
+            var list = new List<IAbstractBinaryTree<T>>();
+
+            var result = this.DfsPostOrder(this, list);
+
+            return result;
         }
 
         public IEnumerable<IAbstractBinaryTree<T>> PreOrder()
         {
-            throw new NotImplementedException();
+            var list = new List<IAbstractBinaryTree<T>>();
+
+            var result = this.DfsPreOrder(this, list);
+
+            return result;
+        }
+
+        private IEnumerable<IAbstractBinaryTree<T>> DfsPreOrder(IAbstractBinaryTree<T> tree, List<IAbstractBinaryTree<T>> listForResults)
+        {
+            listForResults.Add(tree);
+
+            if (tree.LeftChild != null)
+            {
+                this.DfsPreOrder(tree.LeftChild, listForResults);
+            }
+
+            if (tree.RightChild != null)
+            {
+                this.DfsPreOrder(tree.RightChild, listForResults);
+            }
+
+            return listForResults;
+        }
+
+        private IEnumerable<IAbstractBinaryTree<T>> DfsInOrder(IAbstractBinaryTree<T> tree, List<IAbstractBinaryTree<T>> listForResults)
+        {
+
+            if (tree.LeftChild != null)
+            {
+                this.DfsInOrder(tree.LeftChild, listForResults);
+            }
+
+            listForResults.Add(tree);
+
+            if (tree.RightChild != null)
+            {
+                this.DfsInOrder(tree.RightChild, listForResults);
+            }
+
+            return listForResults;
+        }
+
+        private IEnumerable<IAbstractBinaryTree<T>> DfsPostOrder(IAbstractBinaryTree<T> tree, List<IAbstractBinaryTree<T>> listForResults)
+        {
+            if (tree.LeftChild != null)
+            {
+                this.DfsPostOrder(tree.LeftChild, listForResults);
+            }
+
+            if (tree.RightChild != null)
+            {
+                this.DfsPostOrder(tree.RightChild, listForResults);
+            }
+
+            listForResults.Add(tree);
+
+            return listForResults;
         }
     }
 }
