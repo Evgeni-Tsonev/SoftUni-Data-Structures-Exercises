@@ -1,9 +1,7 @@
 ﻿namespace _01.BinaryTree
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Text;
 
     public class BinaryTree<T> : IAbstractBinaryTree<T>
@@ -25,7 +23,7 @@
         {
             var sb = new StringBuilder();
 
-            var result = this.Dfs(this, sb, indent);
+            var result = this.DfsPreOrderStrings(this, sb, indent);
 
             return result;
         }
@@ -69,19 +67,19 @@
             return result;
         }
 
-        private string Dfs(IAbstractBinaryTree<T> tree, StringBuilder sb, int indent)
+        private string DfsPreOrderStrings(IAbstractBinaryTree<T> tree, StringBuilder sb, int indent)
         {
             sb.Append(new string(' ', indent));
             sb.AppendLine(tree.Value.ToString());
 
             if (tree.LeftChild != null)
             {
-                this.Dfs(tree.LeftChild, sb, indent + 2);
+                this.DfsPreOrderStrings(tree.LeftChild, sb, indent + 2);
             }
 
             if (tree.RightChild != null)
             {
-                this.Dfs(tree.RightChild, sb, indent + 2);
+                this.DfsPreOrderStrings(tree.RightChild, sb, indent + 2);
             }
 
             return sb.ToString().TrimEnd();
